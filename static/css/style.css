@@ -1,0 +1,83 @@
+.btn {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: linear-gradient(to right, #0056b3, #003d82);
+  transform: translateY(-1px);
+}
+body {
+  background-color: #f8f9faaf;
+  font-family: "Arial", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.most-popular {
+  border: 3px solid #007bff;
+  position: relative;
+}
+
+.most-popular::before {
+  content: "BEST VALUE";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.btn-custom {
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.feature-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.feature-list li {
+  margin-bottom: 10px;
+}
+
+.feature-list i {
+  color: #28a745;
+  margin-right: 5px;
+}
+
+.savings-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}

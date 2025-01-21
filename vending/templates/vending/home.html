@@ -1,0 +1,189 @@
+{% extends "vending/base.html" %}
+
+{% block title %}Dashboard - Vending Machine Dashboard{% endblock %}
+
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New machine registration</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Hey {{request.user.username}}</strong> Did you know that you are granted 25 tokens for every new
+          machine registered.?
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <form class="row g-3 was-validated" validate method="post">
+          {% csrf_token %}
+
+          <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+              <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+                name="name" required>
+              <div class="invalid-feedback">
+                Please choose a username.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="validationCustom01" class="form-label">Location</label>
+            <input type="text" class="form-control" id="validationCustom01" required name="location">
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="validationCustom03" class="form-label">Serial Number</label>
+            <input type="text" class="form-control" id="validationCustom03" required name="serial_number">
+            <div class="invalid-feedback">
+              Please provide a serial_number.
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="validationCustom04" class="form-label">Machine Type</label>
+            <select class="form-select" id="validationCustom04" required name="machine_typer">
+              <option selected disabled value="">Choose...</option>
+              <option>Milk</option>
+              <option>Juice</option>
+              <option>Cooking oil</option>
+              <option>Other</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid value.
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="validationCustom05" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="validationCustom05" required>
+            <div class="invalid-feedback">
+              Please provide a valid zip.
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+              <label class="form-check-label" for="invalidCheck">
+                Agree to terms and conditions
+              </label>
+              <div class="invalid-feedback">
+                You must agree before submitting.
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="h3 mb-0 text-center text-decoration-underline">Welcome back {{ request.user.username }}🖐</h2>
+  </div>
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4">
+  <div class="col">
+    <div class="card h-100 text-center">
+      <div class="card-body">
+        <h5 class="card-title text-decoration-underline">Total Machines</h5>
+        <p class="card-text display-6">{{ machines|length }}</p>
+      </div>
+      <div class="text-center mb-2">
+        <button class="btn text-center" type="button" class="btn btn-primary" data-bs-toggle="modal"
+          data-bs-target="#exampleModal"><i class="fa-solid fa-plus"></i> New
+          machine</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title text-decoration-underline">Total Sales</h5>
+        <p class="card-text display-6">Ksh {{ total_sales }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title text-decoration-underline">Total Transactions</h5>
+        <p class="card-text display-6">Ksh {{ total_transactions }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title text-decoration-underline">Generate Report</h5>
+        <button class="btn btn-primary mt-2">Download PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <h3 class="h4 mb-3 text-center text-decoration-underline">Machines Overview</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% for machine in machines %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ machine.machine_type }} Machine #{{machine.name}}</h5>
+            <p class="card-text">Location: {{ machine.location }}</p>
+            <p class="card-text">Total Sales: Ksh {{ machine.total_amount }}</p>
+            <a href="{% url 'specific_machine' machine.id %}" class="btn btn-primary">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h3 class="h4 mb-3 text-center text-decoration-underline">Recent Transactions</h3>
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Machine id</th>
+                <th>Amount</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for transaction in transactions %}
+              <tr>
+                <td scope="row">#{{ transaction.machine_id }}</td>
+                <td>Ksh {{ transaction.amount }}</td>
+                <td>{{ transaction.date }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'vending/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-sm-10 col md-8 col-lg-6 text-center mt-auto mb-auto">
+      <div class="card rounded-1">
+        <div class="card-body">
+
+          <form action="{% url 'login' %}" method="post">
+            <h2 class="my-2 display-6 fw-bold">Login to account</h2>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Login</button>
+            <p class="my-2">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}

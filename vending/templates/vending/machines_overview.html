@@ -1,0 +1,80 @@
+{% extends "vending/base.html" %}
+
+{% block title %}{{ machine.type }} Machine Details - Vending Machine Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="h3 mb-0">{{ machine.type }} Machine Details</h2>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title h5">Machine Information</h3>
+        <p class="card-text">Location: {{ machine.location }}</p>
+        <p class="card-text">Total Sales: ${{ machine.total_sales }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title h5 mb-3">Token Renewal</h3>
+        <form method="post" action="{% url 'renew_tokens' machine.id %}">
+          {% csrf_token %}
+          <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+            {% for option in pricing_options %}
+            <div class="col">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="pricing_option" value="{{ option.id }}"
+                      id="option_{{ option.id }}">
+                    <label class="form-check-label" for="option_{{ option.id }}">
+                      <h4 class="h6 mb-0">${{ option.price }}</h4>
+                      <p class="mb-0">{{ option.tokens }} Tokens</p>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <button type="submit" class="btn btn-primary">Renew Tokens</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col">
+    <h3 class="h4 mb-3">Transaction History</h3>
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for transaction in transactions %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>${{ transaction.amount }}</span>
+            <span>{{ transaction.date }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <a href="{% url 'download_transactions' machine.id %}" class="btn btn-primary">Download Transaction History
+      (PDF)</a>
+  </div>
+</div>
+{% endblock %}
