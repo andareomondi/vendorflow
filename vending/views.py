@@ -10,7 +10,9 @@ from .models import *
 # Create your views here.
 class Home(LoginRequiredMixin, View):
   def get(self, request):
-    machines = Machine.objects.all()
+    user = request.user.pk
+    machines = Machine.objects.filter(owner=user)
+    # machines = Machine.objects.all()
     transactions = Transaction.objects.order_by('-date')
     total_sales = sum(machine.total_amount for machine in machines)
     total_transactions = sum(transaction.amount for transaction in Transaction.objects.all())
