@@ -64,9 +64,7 @@ class Specific_Machine(LoginRequiredMixin, View):
 
     refill = Refill(machine=machine, token_pack=package, status='Pending', payment_made=payment_made)
     refill.save()
-
-    print(package)
-    messages.success(request, 'Refill request submitted successfully')
+    messages.success(request, 'Refill request submitted successfully. Please wait for approval')
     return redirect('specific_machine', pk=pk)
 
 
