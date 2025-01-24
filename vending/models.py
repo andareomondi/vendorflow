@@ -48,7 +48,7 @@ class Refill(models.Model):
     token_pack = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.machine.name} - {self.date} - {self.amount}'
+        return f'{self.machine.name} - {self.date}'
 
     def refill_tokens(self):
         if self.payment_made and self.status == 'Approved':

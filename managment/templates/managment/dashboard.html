@@ -3,14 +3,65 @@
 {% block title %}Dashboard - Vending Machine Dashboard{% endblock %}
 
 {% block content %}
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-sm-10 col-md-8">
+      <div class="card">
+        <div class="card-body">
 
-{% for machine in machines %}
-machine
-{% endfor %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Serial number</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for machine in machines %}
+              <tr>
+                <td scope="row">{{machine.name}}</td>
+                <td>{{machine.serial_number}}</td>
+                <td>{{machine.owner}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-{% for refill in refills %}
-refill
-{% endfor %}
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-sm-10 col-md-8">
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Machine Name</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for refill in refills %}
+              <tr>
+                <td scope="row">{{refill.machine}}</td>
+                <td>{{refill.date}}</td>
+                <td><button class="btn">Approve</button></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 
 {% endblock %}

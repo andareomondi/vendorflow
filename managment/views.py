@@ -9,12 +9,12 @@ class Dashboard(LoginRequiredMixin, View):
     if request.user.is_superuser:
 
       machines = Machine.objects.all()
-      refills = Refill.objects.filter(status='pending')
+      refills = Refill.objects.filter(status='Pending')
       context = {
         'machines': machines,
         'refills': refills,
       }
       return render(request, 'managment/dashboard.html', context)
     else:
-      messages.error(request, 'You are not authorized to view this page')
+      messages.error(request, 'You are not authorized to view the admin dashboard')
       return redirect('home')
