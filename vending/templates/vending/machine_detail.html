@@ -79,7 +79,7 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Amount Paid</th>
+                    <th>Token Pack</th>
                     <th>Payment status</th>
                     <th>Approval status</th>
                     <th>Date</th>
@@ -91,7 +91,7 @@
 
                   <tr>
                     <td scope="row">{{refill.id}}</td>
-                    <td>{{refill.amount}}</td>
+                    <td>{{refill.token_pack}}</td>
                     <td>
                       {% if refill.payment_made == True %}
                       <span class="badge bg-success">Paid</span>
