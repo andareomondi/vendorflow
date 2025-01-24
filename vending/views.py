@@ -32,7 +32,7 @@ class Home(LoginRequiredMixin, View):
     user = request.user
     # machine = Machine.objects.get(serial_number = serial_number)
     if Machine.objects.filter(serial_number=serial_number).exists():
-      messages.error(request, 'Machinen already in the system')
+      messages.error(request, 'Machine already in the system')
       return redirect('home')
     else:
       machine = Machine(name=name, location=location, serial_number=serial_number, machine_type=machine_typer, owner=user)
@@ -76,10 +76,11 @@ class Register(View):
 
     return render(request, 'vending/register.html', {'form': form})
 
-def logout_user(request):
-  if request.method == 'POST':
+class LogOut(View):
+  def post(self, request):
     logout(request)
-    return redirect('login')
+    messages.success(request, 'You have been logged out')
+    return redirect('home')
 
 
 class About(View):

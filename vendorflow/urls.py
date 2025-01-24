@@ -25,9 +25,9 @@ urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('auth/register/', Register.as_view(), name='register'),
     path('', include('django.contrib.auth.urls')),
-    path('logout/', logout_user, name='logout'),
     path("about/", About.as_view(), name="about"),
     path("machine/<int:pk>/", Specific_Machine.as_view(), name="specific_machine"),
+    path("logout/", LogOut.as_view(), name="logout"),
 ]
 
 # Add static and media URLs
