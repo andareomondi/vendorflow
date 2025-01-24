@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from vending.views import *
-
+from managment.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home.as_view(), name='home'),
@@ -28,6 +28,7 @@ urlpatterns = [
     path("about/", About.as_view(), name="about"),
     path("machine/<int:pk>/", Specific_Machine.as_view(), name="specific_machine"),
     path("logout/", LogOut.as_view(), name="logout"),
+    path("dashboard/", Dashboard.as_view(), name="dashboard"),
 ]
 
 # Add static and media URLs

@@ -1,0 +1,16 @@
+{% extends "vending/base.html" %}
+
+{% block title %}Dashboard - Vending Machine Dashboard{% endblock %}
+
+{% block content %}
+
+{% for machine in machines %}
+machine
+{% endfor %}
+
+{% for refill in refills %}
+refill
+{% endfor %}
+
+
+{% endblock %}
