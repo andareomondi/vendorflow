@@ -42,18 +42,22 @@ class Transaction(models.Model):
 
 class Refill(models.Model):
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, related_name='refills')
-    amount = models.FloatField(default=0.000)
     date = models.DateTimeField(auto_now_add=True)
     payment_made = models.BooleanField(default=False)
     status = models.CharField(max_length=100, default='Pending')
-    token_pack = models.CharField(max_length=100,null=True, blank=True)
+    token_pack = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f'{self.machine.name} - {self.date} - {self.amount}'
 
     def refill_tokens(self):
         if self.payment_made and self.status == 'Approved':
-            tokens = self.amount / 5
-            self.machine.remaining_tokens += tokens
-            self.machine.save()
-            return True
+            if self.token_pack == 'Starter Pack':
+                self.machine.remaining_tokens += 25
+                self.machine.save()
+            elif self.token_pack == 'Popular Pack':
+                self.machine.remaining_tokens += 50
+                self.machine.save()
+            elif self.token_pack == 'Bulk Pack':
+                self.machine.remaining_tokens += 100
+                self.machine.save()

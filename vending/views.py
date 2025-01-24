@@ -53,7 +53,21 @@ class Specific_Machine(LoginRequiredMixin, View):
     }
     return render(request, 'vending/machine_detail.html', context=context)
   def post(self, request, pk):
-    pass
+    machine = Machine.objects.get(id=pk)
+    package = request.POST.get('packageName')
+    payment_made = request.POST.get('paymentMade')
+    if payment_made == 'yes':
+      payment_made = True
+    else:
+      payment_made = False
+    # print(package, total_price, token_amount)
+
+    refill = Refill(machine=machine, token_pack=package, status='Pending', payment_made=payment_made)
+    refill.save()
+
+    print(package)
+    messages.success(request, 'Refill request submitted successfully')
+    return redirect('specific_machine', pk=pk)
 
 
 class Register(View):

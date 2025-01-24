@@ -200,7 +200,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="purchaseForm" action="YOUR_BACKEND_URL_HERE/complete_purchase/" method="POST">
+          <form id="purchaseForm" method="POST">
+            {% csrf_token %}
             <input type="hidden" id="packageName" name="packageName">
             <input type="hidden" id="tokenAmount" name="tokenAmount">
             <input type="hidden" id="totalPrice" name="totalPrice">
@@ -210,7 +211,7 @@
             </div>
             <div class="mb-3">
               <label for="paymentMethod" class="form-label">Have you paid</label>
-              <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+              <select class="form-select" id="paymentMethod" name="paymentMade" required>
                 <option selected disabled>------</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
