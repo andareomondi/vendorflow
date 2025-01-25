@@ -8,8 +8,8 @@ class Dashboard(LoginRequiredMixin, View):
   def get(self, request):
     if request.user.is_superuser:
 
-      machines = Machine.objects.all()
-      refills = Refill.objects.filter(status='Pending')
+      machines = Machine.objects.order_by('id')
+      refills = Refill.objects.filter(status='Pending', payment_made=True)
       context = {
         'machines': machines,
         'refills': refills,
@@ -18,3 +18,11 @@ class Dashboard(LoginRequiredMixin, View):
     else:
       messages.error(request, 'You are not authorized to view the admin dashboard')
       return redirect('home')
+  def post(self, request):
+    refill_id = request.POST.get('button')
+    refill = Refill.objects.get(id=refill_id)
+    refill.status = 'Approved'
+    refill.save()
+    refill.refill_tokens()
+    messages.success(request, 'Refill Approved')
+    return redirect('dashboard')

@@ -48,11 +48,22 @@
       {% block content %}{% endblock %}
     </div>
   </main>
+
+  {% if request.user.is_superuser %}
   <footer class="bg-light py-3 mt-auto">
     <div class="container text-center">
-      <span class="text-muted">© {% now "Y" %} Vending Machine Dashboard</span>
+      <span class="text-muted">© {% now "Y" %} VendorFlow <a href="{% url 'dashboard' %}">Dashboard</a></span>
     </div>
   </footer>
+  {% else %}
+  <footer class="bg-light py-3 mt-auto">
+    <div class="container text-center">
+      <span class="text-muted">© {% now "Y" %} VendorFlow</span>
+    </div>
+  </footer>
+
+  {% endif %}
+
 </body>
 
 </html>

@@ -1,32 +1,50 @@
 {% extends "vending/base.html" %}
 
-{% block title %}Dashboard - Vending Machine Dashboard{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
 <div class="container">
   <div class="row my-3 justify-content-center">
     <div class="col-sm-10 col-md-8">
+      <h3 class="h4 mb-3 text-center text-decoration-underline">List of All Registered Machines</h3>
       <div class="card">
         <div class="card-body">
 
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Serial number</th>
-                <th>Owner</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for machine in machines %}
-              <tr>
-                <td scope="row">{{machine.name}}</td>
-                <td>{{machine.serial_number}}</td>
-                <td>{{machine.owner}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Serial number</th>
+                  <th>Owner</th>
+                  <th>Location</th>
+                  <th>Remaining Tokens</th>
+                  <th>status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for machine in machines %}
+                <tr>
+                  <td scope="row">{{machine.id}}</td>
+                  <td>{{machine.name}}</td>
+                  <td>{{machine.serial_number}}</td>
+                  <td>{{machine.owner}}</td>
+                  <td>{{machine.location}}</td>
+                  <td>{{machine.remaining_tokens}}</td>
+                  <td>
+                    {% if machine.remaining_tokens > 0 %}
+                    <span class="badge bg-success">Active</span>
+                    {% else %}
+                    <span class="badge bg-danger">Off</span>
+                    {% endif %}
+                  </td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -34,27 +52,36 @@
   </div>
   <div class="row my-3 justify-content-center">
     <div class="col-sm-10 col-md-8">
+      <h3 class="h4 mb-3 text-center text-decoration-underline">Refill Requests</h3>
+
       <div class="card">
         <div class="card-body">
 
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Machine Name</th>
-                <th>Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for refill in refills %}
-              <tr>
-                <td scope="row">{{refill.machine}}</td>
-                <td>{{refill.date}}</td>
-                <td><button class="btn">Approve</button></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Machine Details</th>
+                  <th>Date</th>
+                  <th>Paid</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for refill in refills %}
+                <form method="post">
+                  {% csrf_token %}
+                  <tr>
+                    <td scope="row">{{refill.machine}}</td>
+                    <td>{{refill.date}}</td>
+                    <td>{{refill.payment_made}}</td>
+                    <td><button class="btn" value="{{ refill.id }}" name="button">Approve</button></td>
+                  </tr>
+                </form>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
