@@ -5,7 +5,7 @@ broker_address = "localhost"
 broker_port = 1883
 username = 'test_topic'
 password = 'test'
-topic = 'TEST'
+topic = 'test'
 
 
 # function to handle messages being posted
@@ -14,16 +14,20 @@ def on_message(client, userdata, message):
     msg = message.payload.decode('utf-8')
     print(msg)
     if not msg == '':
-        serial = msg['serial_no']
-        amount = msg['amount']
-        volume = msg['volume']
-        total_amount = msg['total_amount']
-        total_volume = msg['total_volume']
-        machine = Machine.objects.get(serial_number = serial)
-        if machine.exists() and machine.remaining_tokens > 0.5:
-            transaction = Transaction(machine = machine, amount = amount, volume = volume, total_amount = total_amount, total_volume = total_volume)
-            transaction.save()
-            transaction.remaining_tokens()
+        try:
+            serial = msg['serial_no']
+            amount = msg['amount']
+            volume = msg['volume']
+            total_amount = msg['total_amount']
+            total_volume = msg['total_volume']
+            machine = Machine.objects.get(serial_number = serial)
+            if machine.exists() and machine.remaining_tokens > 1:
+                transaction = Transaction(machine = machine, amount = amount, volume = volume, total_amount = total_amount, total_volume = total_volume)
+                transaction.save()
+                transaction.remaining_tokens()
+        except Exception as e:
+            print(e)
+
 
 # creating an instance of the mqtt client
 client = mqtt.Client()

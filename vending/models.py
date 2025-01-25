@@ -26,7 +26,7 @@ class Transaction(models.Model):
     amount = models.FloatField(default=0.000)
     date = models.DateTimeField(auto_now_add=True)
     volume = models.FloatField(default=0.000)
-    token_used = models.FloatField(default=0.5)
+    token_used = models.FloatField(default=1)
     total_amount = models.FloatField(default=0.000)
     total_volume = models.FloatField(default=0.000)
 
