@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vending Machine Overview</title>
+  </head>
+  <body style="
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12pt;
+      line-height: 1.3;
+      color: #333;
+    ">
+    <div id="header_content" style="text-align: center">
+      <h1 style="color: #2c3e50; margin: 0">Vending Machine Overview</h1>
+    </div>
+
+    <div id="content">
+      <h2 style="
+          color: #34495e;
+          border-bottom: 2px solid #34495e;
+          padding-bottom: 5px;
+        ">Machine Information</h2>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px">
+        <tr>
+          <td style="
+              font-weight: bold;
+              padding: 5px;
+              border: 1px solid #bdc3c7;
+              width: 30%;
+            ">Name:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.name }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Location:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.location }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Serial Number:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.serial_number }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Machine Type:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.machine_type }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Total Volume:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.total_volume }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Remaining Tokens:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.remaining_tokens }}</td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 5px; border: 1px solid #bdc3c7">Owner:</td>
+          <td style="padding: 5px; border: 1px solid #bdc3c7">{{ machine.owner }}</td>
+        </tr>
+      </table>
+
+      <h2 style="
+          color: #34495e;
+          border-bottom: 2px solid #34495e;
+          padding-bottom: 5px;
+        ">Transactions Overview</h2>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px">
+        <thead>
+          <tr style="background-color: #ecf0f1">
+            <th style="
+                font-weight: bold;
+                padding: 8px;
+                border: 1px solid #bdc3c7;
+                text-align: left;
+              ">Transaction ID</th>
+            <th style="
+                font-weight: bold;
+                padding: 8px;
+                border: 1px solid #bdc3c7;
+                text-align: left;
+              ">Amount</th>
+            <th style="
+                font-weight: bold;
+                padding: 8px;
+                border: 1px solid #bdc3c7;
+                text-align: left;
+              ">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+            <tr>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ transaction.id }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ transaction.amount }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ transaction.date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+      <h2 style="
+          color: #34495e;
+          border-bottom: 2px solid #34495e;
+          padding-bottom: 5px;
+        ">Refills Overview</h2>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px">
+        <thead>
+          <tr style="background-color: #ecf0f1">
+            <th style="
+                font-weight: bold;
+                padding: 8px;
+                border: 1px solid #bdc3c7;
+                text-align: left;
+              ">Refill ID</th>
+            <th style="
+                font-weight: bold;
+                padding: 8px;
+                border: 1px solid #bdc3c7;
+                text-align: left;
+              ">Date</th>
+              <th style="
+              font-weight: bold;
+              padding: 8px;
+              border: 1px solid #bdc3c7;
+              text-align: left;
+            ">Payment Made</th>
+            <th style="
+            font-weight: bold;
+            padding: 8px;
+            border: 1px solid #bdc3c7;
+            text-align: left;
+          ">Status</th>
+          <th style="
+          font-weight: bold;
+          padding: 8px;
+          border: 1px solid #bdc3c7;
+          text-align: left;
+        ">Token Pack</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for refill in refills %}
+            <tr>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ refill.id }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ refill.token_pack }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ refill.payment_made }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ refill.status }}</td>
+              <td style="padding: 8px; border: 1px solid #bdc3c7">{{ refill.date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+    <div id="footer_content" style="text-align: center; font-size: 10pt; color: #7f8c8d">
+      <p>Generated on {{ generation_date }}</p>
+    </div>
+  </body>
+</html>

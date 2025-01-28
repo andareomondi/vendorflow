@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-broker_address = "102.130.118.195"
+broker_address = "localhost"
 broker_port = 1883
 username = 'test'
 password = 'test'
@@ -25,30 +25,23 @@ def on_message(client, userdata, msg):
                 transaction.remaining_tokens()
         except Exception as e:
             print(e)
-
+def on_connnect(client, userdata, flags, rc, properties):
+    if rc == 0:
+        print("Connected to broker")
+        client.subscribe(topic)
+    else:
+        print(f"Failed to connect with result code {rc}")
 
 # creating an instance of the mqtt client
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_message = on_message
 client.username_pw_set(username, password)
+client.on_connect = on_connnect
 
-# connecting to the broker
-# using a nested function for multi threading to prevent disrupting the main thread
 def start_mqtt_client():
-    def on_connect(client, userdata, flags, rc):
-        if rc == 0:
-            print("Connected to broker")
-            client.subscribe(topic)
-        else:
-            print(f"Failed to connect with result code {rc}")
     try:
-      client.on_connect = on_connect
-      client.connect(broker_address, broker_port, 60)
-
-      try:
-          client.loop_start()
-      except Exception as e:
-          print(f"Error starting MQTT loop: {e}")
-          client.loop_stop()
+        client.connect(broker_address, broker_port, 60)
+        client.loop_start()
     except Exception as e:
         print(f"Error connecting to MQTT broker: {e}")
+        client.loop_stop()
