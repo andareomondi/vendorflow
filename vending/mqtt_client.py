@@ -1,17 +1,15 @@
-# importing the library
 import paho.mqtt.client as mqtt
-# defining the variables
-broker_address = "localhost"
+broker_address = "102.130.118.195"
 broker_port = 1883
-username = 'test_topic'
+username = 'test'
 password = 'test'
-topic = 'test'
+topic = 'PLC_VENDING'
 
 
 # function to handle messages being posted
-def on_message(client, userdata, message):
+def on_message(client, userdata, msg):
     from .models import Machine, Transaction
-    msg = message.payload.decode('utf-8')
+    msg = msg.payload.decode('utf-8')
     print(msg)
     if not msg == '':
         try:
@@ -30,20 +28,17 @@ def on_message(client, userdata, message):
 
 
 # creating an instance of the mqtt client
-client = mqtt.Client()
-# client embedded functions like on_message which calls back the preddfined function
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_message = on_message
-
-# authentication if necessary
-# client.username_pw_set(username, password)
+client.username_pw_set(username, password)
 
 # connecting to the broker
 # using a nested function for multi threading to prevent disrupting the main thread
 def start_mqtt_client():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
+            print("Connected to broker")
             client.subscribe(topic)
-            client.publish(topic)
         else:
             print(f"Failed to connect with result code {rc}")
     try:

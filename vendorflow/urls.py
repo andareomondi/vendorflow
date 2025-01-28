@@ -29,6 +29,7 @@ urlpatterns = [
     path("machine/<int:pk>/", Specific_Machine.as_view(), name="specific_machine"),
     path("logout/", LogOut.as_view(), name="logout"),
     path("dashboard/", Dashboard.as_view(), name="dashboard"),
+    path('user-overview-pdf/', user_overview_pdf, name='user_overview_pdf'),
 ]
 
 # Add static and media URLs

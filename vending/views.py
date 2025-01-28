@@ -1,19 +1,23 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserRegistrationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
+from xhtml2pdf import pisa
+from io import BytesIO
+from django.template.loader import render_to_string, get_template
+from django.http import HttpResponse
+
 
 # Create your views here.
 class Home(LoginRequiredMixin, View):
   def get(self, request):
-    user = request.user.pk
+    user = request.user
     machines = Machine.objects.filter(owner=user)
-    # machines = Machine.objects.all()
-    transactions = Transaction.objects.order_by('-date')
+    transactions = Transaction.objects.select_related('machine__owner').all()
     total_sales = sum(machine.total_amount for machine in machines)
     total_transactions = sum(transaction.amount for transaction in Transaction.objects.all())
     context = {
@@ -30,7 +34,6 @@ class Home(LoginRequiredMixin, View):
     serial_number = request.POST.get('serial_number')
     machine_typer = request.POST.get('machine_typer')
     user = request.user
-    # machine = Machine.objects.get(serial_number = serial_number)
     if Machine.objects.filter(serial_number=serial_number).exists():
       messages.error(request, 'Machine already in the system')
       return redirect('home')
@@ -98,3 +101,34 @@ class LogOut(View):
 class About(View):
   def get(self, request):
     return render(request, 'vending/about.html')
+
+# pdf generation for machine's overview
+def machine_overview_pdf(request, pk):
+  machine = Machine.objects.get(id=pk)
+  pass
+
+def user_overview_pdf(request):
+    owner = request.user
+    machines = Machine.objects.filter(owner=owner)
+    user = User.objects.get(username=owner)
+    transactions = Transaction.objects.select_related('machine__owner').all()
+    total_transactions = sum(transaction.amount for transaction in Transaction.objects.all())
+    total_sales = sum(machine.total_amount for machine in machines)
+    template = get_template('vending/owner_overview_pdf.html')
+    context = {
+        'owner': user,
+        'machines': machines,
+        'transactions': transactions,
+        'total_transactions': total_transactions,
+        'total_sales': total_sales,
+        'generation_date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    html = template.render(context)
+
+    # Create a PDF
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('Error Rendering PDF', status=400)
