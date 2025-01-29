@@ -19,7 +19,7 @@
 
   <div class="row mb-4">
     <div class="col">
-      <div class="card">
+      <div class="stat-card">
         <div class="card-body">
           <p class="card-text"><strong>Name: </strong> {{ machine.name}}</p>
           <p class="card-text"><strong>Serial number: </strong> {{ machine.serial_number }}</p>
@@ -34,11 +34,11 @@
   <div class="row mb-4">
     <div class="col">
       <h3 class="h4 mb-3">Transaction History</h3>
-      <div class="card">
+      <div class="stat-card">
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <div class="table-responsive">
-              <table class="table">
+              <table class="transactions-table">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -71,11 +71,11 @@
   <div class="row mb-4">
     <div class="col">
       <h3 class="h4 mb-3">Refill Logs</h3>
-      <div class="card">
+      <div class="stat-card">
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <div class="table-responsive">
-              <table class="table">
+              <table class="transactions-table">
                 <thead>
                   <tr>
                     <th>ID</th>

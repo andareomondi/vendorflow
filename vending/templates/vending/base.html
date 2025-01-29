@@ -20,8 +20,16 @@
 
 <body class="d-flex flex-column min-vh-100">
   <nav class="navbar">
-    <div class="logo">VendorFlow</div>
-    <button class="logout-btn">Logout</button>
+    <div class="logo" > <a href="{% url 'home' %}">VendorFlow</a></div>
+
+    {% if request.user.is_authenticated %}
+
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button class="logout-btn" type='submit'>Logout</button>
+    </form>
+    {% endif %}
+
 </nav>
   </header>
   <main class="flex-grow-1 py-4">

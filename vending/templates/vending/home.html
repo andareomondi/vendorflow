@@ -105,18 +105,16 @@
 
   <h2 class="section-title">Machines Overview</h2>
   <div class="machines-grid">
-      <div class="machine-card">
-          <h3 class="machine-title">Cooking oil Machine #Milk kitui</h3>
-          <div class="machine-info">Location: Kitui</div>
-          <div class="machine-info">Total Sales: Ksh 0.0</div>
-          <button class="view-btn">View Details</button>
-      </div>
-      <div class="machine-card">
-          <h3 class="machine-title">Milk Machine #Cadet</h3>
-          <div class="machine-info">Location: dsafds</div>
-          <div class="machine-info">Total Sales: Ksh 0.0</div>
-          <button class="view-btn">View Details</button>
-      </div>
+
+    {% for machine in machines %}
+
+    <div class="machine-card">
+        <h3 class="machine-title">{{ machine.machine_type }} Machine #{{machine.name}}</h3>
+        <div class="machine-info">Location: {{ machine.location }}</div>
+        <div class="machine-info">Total Sales: Ksh {{ machine.total_amount }}</div>
+        <a class="view-btn" href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">View Details</a>
+    </div>
+    {% endfor %}
   </div>
 
   <h2 class="section-title">Recent Transactions</h2>
@@ -129,7 +127,10 @@
           </tr>
       </thead>
       <tbody>
-          <!-- Empty state shown -->
+          <tr>
+              <td>1</td>
+              <td>Ksh 100</td>
+              <td>2021-09-01</td>
       </tbody>
   </table>
 </div>
