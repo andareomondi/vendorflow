@@ -6,16 +6,16 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content bg-dark text-white">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">New machine registration</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-dismissible fade show alert-dark" role="alert">
           <strong>Hey {{request.user.username}}</strong> Did you know that you are granted 25 tokens for every new
           machine registered.?
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <form class="row g-3 was-validated" validate method="post">
           {% csrf_token %}
@@ -24,7 +24,7 @@
             <label for="validationCustomUsername" class="form-label">Username</label>
             <div class="input-group">
               <span class="input-group-text" id="inputGroupPrepend">@</span>
-              <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+              <input type="text" class="form-control bg-dark text-white" id="validationCustomUsername" aria-describedby="inputGroupPrepend"
                 name="name" required>
               <div class="invalid-feedback">
                 Please choose a username for your machine.
@@ -33,21 +33,21 @@
           </div>
           <div class="col-md-4">
             <label for="validationCustom01" class="form-label">Location</label>
-            <input type="text" class="form-control" id="validationCustom01" required name="location">
+            <input type="text" class="form-control bg-dark text-white" id="validationCustom01" required name="location">
             <div class="valid-feedback">
               Looks good!
             </div>
           </div>
           <div class="col-md-6">
             <label for="validationCustom03" class="form-label">Serial Number</label>
-            <input type="text" class="form-control" id="validationCustom03" required name="serial_number">
+            <input type="text" class="form-control bg-dark text-white" id="validationCustom03" required name="serial_number">
             <div class="invalid-feedback">
               Please provide a serial_number.
             </div>
           </div>
           <div class="col-md-3">
             <label for="validationCustom04" class="form-label">Machine Type</label>
-            <select class="form-select" id="validationCustom04" required name="machine_typer">
+            <select class="form-select bg-dark text-white" id="validationCustom04" required name="machine_typer">
               <option selected disabled value="">Choose...</option>
               <option>Milk</option>
               <option>Juice</option>
@@ -78,28 +78,35 @@
     </div>
   </div>
 </div>
+<div class="container text-white">
+  <h1 class="welcome">Welcome back {{request.user.username}} 👋</h1>
 
-
-<div class="container">
-  <h1 class="welcome">Welcome back avnadmin 👋</h1>
-
-  <div class="stats-grid">
-      <div class="stat-card">
-          <div class="stat-title">Total Machines</div>
-          <div class="stat-value">2</div>
-          <button class="view-btn">+ New machine</button>
+  <div class="row justify-content-center">
+      <div class="col-lg-3 col-sm-6 mb-2">
+        <div class="stat-card">
+            <div class="stat-title">Total Machines</div>
+            <div class="stat-value">{{machines | length}}</div>
+            <button class="view-btn"   data-bs-toggle="modal"
+            data-bs-target="#exampleModal" type="button">+ New machine</button>
+        </div>
       </div>
-      <div class="stat-card">
-          <div class="stat-title">Total Sales</div>
-          <div class="stat-value">Ksh 0.0</div>
+      <div class="col-lg-3 col-sm-6 mb-2">
+        <div class="stat-card">
+            <div class="stat-title">Total Sales</div>
+            <div class="stat-value">Ksh {{total_sales}}</div>
+        </div>
       </div>
-      <div class="stat-card">
-          <div class="stat-title">Total Transactions</div>
-          <div class="stat-value">Ksh 0</div>
+      <div class="col-lg-3 col-sm-6 mb-2">
+        <div class="stat-card">
+            <div class="stat-title">Total Transactions</div>
+            <div class="stat-value">Ksh {{total_transactions}}</div>
+        </div>
       </div>
-      <div class="stat-card">
-          <div class="stat-title">Generate Report</div>
-          <button class="view-btn">Download PDF</button>
+      <div class="col-lg-3 col-sm-6 mb-2">
+        <div class="stat-card">
+            <div class="stat-title">Generate Report</div>
+            <a class="view-btn" href="{% url 'user_overview_pdf' %}">Download PDF</a>
+        </div>
       </div>
   </div>
 
@@ -127,10 +134,14 @@
           </tr>
       </thead>
       <tbody>
-          <tr>
-              <td>1</td>
-              <td>Ksh 100</td>
-              <td>2021-09-01</td>
+        {% for transaction in transactions %}
+        <tr>
+          <td scope="row">#{{ transaction.machine_id }}</td>
+          <td>Ksh {{ transaction.amount }}</td>
+          <td>{{ transaction.date }}</td>
+        </tr>
+        {% endfor %}
+
       </tbody>
   </table>
 </div>
