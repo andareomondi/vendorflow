@@ -195,7 +195,7 @@
     <!-- Add hidden inputs within the form inside the modal -->
     <div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content bg-dark text-white">
           <div class="modal-header">
             <h5 class="modal-title" id="purchaseModalLabel">Purchase Package</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -208,11 +208,11 @@
               <input type="hidden" id="totalPrice" name="totalPrice">
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control bg-dark text-white" id="email" name="email" required>
               </div>
               <div class="mb-3">
                 <label for="paymentMethod" class="form-label">Have you paid</label>
-                <select class="form-select" id="paymentMethod" name="paymentMade" required>
+                <select class="form-select text-white" id="paymentMethod" name="paymentMade" required>
                   <option selected disabled>------</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
