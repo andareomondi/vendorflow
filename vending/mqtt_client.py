@@ -8,7 +8,7 @@ topic = 'PLC_VENDING'
 
 # function to handle messages being posted
 def on_message(client, userdata, msg):
-    from .models import Machine, Transaction
+    from .models import Machine, Transaction    
     msg = msg.payload.decode('utf-8')
     print(msg)
     if not msg == '':
