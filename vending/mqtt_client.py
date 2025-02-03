@@ -1,3 +1,4 @@
+import json
 import paho.mqtt.client as mqtt
 broker_address = "102.130.118.195"
 broker_port = 1883
@@ -6,8 +7,6 @@ password = 'test'
 topic = 'PLC_VENDING'
 
 
-# function to handle messages being posted
-import json
 
 def on_message(client, userdata, msg):
     from .models import Machine, Transaction
@@ -15,7 +14,9 @@ def on_message(client, userdata, msg):
     print(msg)
     if msg:
         try:
-            data = json.loads(msg)  # Parse the JSON string into a dictionary
+            # Replace single quotes with double quotes
+            formatted_msg = msg.replace("'", '"')
+            data = json.loads(formatted_msg)  # Parse the JSON string into a dictionary
             serial = data['serial_no']
             amount = data['amount']
             volume = data['volume']
@@ -32,8 +33,11 @@ def on_message(client, userdata, msg):
                 )
                 transaction.save()
                 transaction.remaining_tokens()
+        except json.JSONDecodeError as e:
+            print(f"JSON decode error: {e}")
         except Exception as e:
             print(e)
+
 
 def on_connnect(client, userdata, flags, rc, properties):
     if rc == 0:
