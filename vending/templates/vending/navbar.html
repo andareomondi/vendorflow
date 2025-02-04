@@ -19,7 +19,7 @@
 
               {% for machine in machines %}
 
-              <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}}: #{{machine.location}}</a>
+              <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
               {% endfor %}
 
             </div>
