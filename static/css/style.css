@@ -9,6 +9,14 @@
   --success: #22c55e;
 }
 
+.section-title {
+  margin-bottom: 50px;
+  color: var(--primary-dark);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
 
 body {
   background-color: var(--background);

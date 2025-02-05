@@ -83,15 +83,20 @@
   <h1 class="welcome mt-4">Welcome back {{request.user.username}} 👋</h1>
 
   <div class="row justify-content-center">
-      <div class="col-lg-12 col-sm-10 mb-2">
+      <div class="col-md-6 col-lg-6 col-sm-10 mb-4">
+        <p class="section-title">Vending Machines Overview</p>
         <div class="stat-card">
           <div class="row justify-content-center">
-            <div class="col-6 mb-2 text-center">            <div class="stat-title">Total Vending Machines </div>
-            <div class="stat-value">{{machines | length}}</div></div>
-            <div class="col-6 mb-2 text-center">            <div class="stat-title">Total Transactions</div>
-            <div class="stat-value">Ksh {{total_transactions}}</div></div>
-            <div class="col-6 mb-2 text-center">            <div class="stat-title">Total Sales</div>
-            <div class="stat-value">Ksh {{total_sales}}</div></div>
+            <div class="col-6 mb-2 text-center">
+              <div class="stat-title">Total Vending Machines </div>
+              <div class="stat-value">{{machines | length}}</div></div>
+            <div class="col-6 mb-2 text-center">
+              <div class="stat-title">Total Transactions</div>
+              <div class="stat-value">Ksh {{total_transactions}}</div>
+            </div>
+            <div class="col-6 mb-2 text-center">
+              <div class="stat-title">Total Sales</div>
+              <div class="stat-value">Ksh {{total_sales}}</div></div>
             <div class="col-6 mb-2 text-center">
               <div class="stat-title py-2">Generate Report</div>
               <a class="view-btn" href="{% url 'user_overview_pdf' %}" style="text-decoration: none;">Download PDF</a>
@@ -100,6 +105,14 @@
           <div class="row justify-content-center">
             <button class="view-btn"   data-bs-toggle="modal"
             data-bs-target="#exampleModal" type="button">+ New machine</button>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-10 mb-4">
+        <p class="section-title">Smart Home Overview</p>
+        <div class="stat-card">
+          <div class="row justify-content-center">
           </div>
 
         </div>

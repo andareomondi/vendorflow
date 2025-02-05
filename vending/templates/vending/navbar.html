@@ -4,11 +4,11 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header" style="margin-bottom: -20px;">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Quick Actions</h5>
+        <h5 class="offcanvas-title logo" id="offcanvasNavbarLabel">Quick Actions</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-      <hr>
+        <hr>
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
@@ -19,9 +19,30 @@
 
               {% for machine in machines %}
 
+              {% if machine == '' %}
+              <a class="dropdown-item">No vending machines were found</a>
+              {% else %}
               <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
+              {% endif %}
+
               {% endfor %}
 
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="gadgetsId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Smart Home Gadgets</a>
+            <div class="dropdown-menu" aria-labelledby="gadgetsId">
+
+
+              {% for machine in machines %}
+
+              {% if machine == '' %}
+              <a class="dropdown-item">No smart home gadgets were found</a>
+              {% else %}
+              <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
+              {% endif %}
+
+              {% endfor %}
             </div>
           </li>
           <li class="nav-item mt-3">
@@ -32,6 +53,9 @@
           </li>
         </ul>
       </div>
+      <div class="offcanvas-footer p-3 footer">
+        <p class="text-center">© 2025 VendorFlow</p>
+    </div>
     </div>
   </div>
 </nav>
