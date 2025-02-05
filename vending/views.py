@@ -10,11 +10,20 @@ from xhtml2pdf import pisa
 from io import BytesIO
 from django.template.loader import render_to_string, get_template
 from django.http import HttpResponse
+from django.core.mail import send_mail
 
 
 # Create your views here.
 class Home(LoginRequiredMixin, View):
   def get(self, request):
+    send_mail(
+        'Test Subject',
+        'This is a test email.',
+        'shadrackandare@example.com',
+        ['andareshadrack@example.com'],
+        fail_silently=False,
+    )
+
     user = request.user
     machines = Machine.objects.filter(owner=user)
     transactions = Transaction.objects.select_related('machine__owner').all()
