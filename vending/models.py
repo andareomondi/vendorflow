@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -14,12 +15,26 @@ class Machine(models.Model):
     machine_type = models.CharField(max_length=255, choices=CHOICES, blank=True, null=True, default='Milk')
     total_volume = models.FloatField(default=0.000)
     total_amount = models.FloatField(default=0.000)
-    initial_tokens = models.PositiveIntegerField(default=25)
-    remaining_tokens = models.PositiveIntegerField(default=25)
+    initial_tokens = models.PositiveIntegerField(default=15)  # Updated to 15 tokens
+    remaining_tokens = models.PositiveIntegerField(default=15)  # Updated to 15 tokens
+    days_used = models.PositiveIntegerField(default=0)
+    cost_per_day = models.FloatField(default=3.0)  # Each day costs 3 Ksh
+    tokens_per_month = models.PositiveIntegerField(default=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vending_machine')
+    last_processed_date = models.DateField(default=datetime.now)
 
     def __str__(self):
         return f'{self.name} - {self.serial_number}'
+
+    def process_daily_usage(self):
+        current_date = datetime.now().date()
+        if (current_date - self.last_processed_date).days >= 1:
+            self.days_used += 1
+            self.total_amount += self.cost_per_day
+            self.remaining_tokens -= 1  # One token per day
+            self.last_processed_date = current_date
+            self.save()
+
 
 class Transaction(models.Model):
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, related_name='transactions')
