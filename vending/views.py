@@ -16,19 +16,11 @@ from django.core.mail import send_mail
 # Create your views here.
 class Home(LoginRequiredMixin, View):
   def get(self, request):
-    send_mail(
-        'Test Subject',
-        'This is a test email.',
-        'shadrackandare@example.com',
-        ['andareshadrack@example.com'],
-        fail_silently=False,
-    )
-
     user = request.user
     machines = Machine.objects.filter(owner=user)
-    transactions = Transaction.objects.select_related('machine__owner').all()
+    transactions = Transaction.objects.filter(machine__owner=user).select_related('machine__owner').all()
     total_sales = sum(machine.total_amount for machine in machines)
-    total_transactions = sum(transaction.amount for transaction in Transaction.objects.all())
+    total_transactions = sum(transaction.amount for transaction in transactions)
     context = {
         'machines': machines,
         'transactions': transactions,
