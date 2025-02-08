@@ -7,7 +7,7 @@
   <div class="row my-3 justify-content-center">
     <div class="col-sm-10 col-md-8">
       <h3 class="h4 mb-3 text-center text-decoration-underline">List of All Registered Machines</h3>
-      <div class="card">
+      <div class="card" data-bs-theme="dark">
         <div class="card-body">
 
           <div class="table-responsive">
@@ -54,7 +54,7 @@
     <div class="col-sm-10 col-md-8">
       <h3 class="h4 mb-3 text-center text-decoration-underline">Refill Requests</h3>
 
-      <div class="card">
+      <div class="card" data-bs-theme="dark">
         <div class="card-body">
 
           <div class="table-responsive">
@@ -75,7 +75,7 @@
                     <td scope="row">{{refill.machine}}</td>
                     <td>{{refill.date}}</td>
                     <td>{{refill.payment_made}}</td>
-                    <td><button class="btn" value="{{ refill.id }}" name="button">Approve</button></td>
+                    <td><button class="btn btn-success" value="{{ refill.id }}" name="button">Approve</button></td>
                   </tr>
                 </form>
                 {% endfor %}
