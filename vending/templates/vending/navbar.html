@@ -34,15 +34,7 @@
             <div class="dropdown-menu" aria-labelledby="gadgetsId">
 
 
-              {% for machine in machines %}
-
-              {% if machine == '' %}
-              <a class="dropdown-item">No smart home gadgets were found</a>
-              {% else %}
-              <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
-              {% endif %}
-
-              {% endfor %}
+              <a class="dropdown-item">These feature hasn't been made yet.</a>
             </div>
           </li>
           <li class="nav-item mt-3">
