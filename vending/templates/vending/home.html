@@ -21,7 +21,7 @@
         <form class="row g-3 was-validated" validate method="post">
           {% csrf_token %}
 
-          <div class="col-md-4">
+          <div class="col">
             <label for="validationCustomUsername" class="form-label">Username</label>
             <div class="input-group">
               <span class="input-group-text" id="inputGroupPrepend">@</span>
@@ -32,21 +32,21 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col">
             <label for="validationCustom01" class="form-label">Location</label>
             <input type="text" class="form-control bg-dark text-white" id="validationCustom01" required name="location">
             <div class="valid-feedback">
               Looks good!
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col">
             <label for="validationCustom03" class="form-label">Serial Number</label>
             <input type="text" class="form-control bg-dark text-white" id="validationCustom03" required name="serial_number">
             <div class="invalid-feedback">
               Please provide a serial_number.
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col">
             <label for="validationCustom04" class="form-label">Machine Type</label>
             <select class="form-select bg-dark text-white" id="validationCustom04" required name="machine_typer">
               <option selected disabled value="">Choose...</option>
