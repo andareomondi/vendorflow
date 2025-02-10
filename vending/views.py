@@ -88,6 +88,7 @@ class Register(View):
       user = authenticate(username=user.username, password=form.cleaned_data['password'])
       if user is not None:
         login(request, user)
+        messages.success(request, 'User creation was succesfull')
         return redirect('home')
 
     return render(request, 'vending/register.html', {'form': form})
