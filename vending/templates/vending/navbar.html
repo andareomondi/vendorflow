@@ -17,15 +17,13 @@
             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your Machines</a>
             <div class="dropdown-menu" aria-labelledby="dropdownId">
 
-              {% for machine in machines %}
-
-              {% if machine == '' %}
-              <a class="dropdown-item">No vending machines were found</a>
-              {% else %}
-              <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
-              {% endif %}
-
-              {% endfor %}
+                {% if not sidebar_objects %}
+                <a class="dropdown-item">No vending machines were found</a>
+                {% else %}
+                {% for machine in sidebar_objects %}
+                <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
+                {% endfor %}
+                {% endif %}
 
             </div>
           </li>
