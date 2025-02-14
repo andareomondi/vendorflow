@@ -33,6 +33,8 @@ urlpatterns = [
     path("dashboard/", Dashboard.as_view(), name="dashboard"),
     path('user-overview-pdf/', user_overview_pdf, name='user_overview_pdf'),
     path("machine_pdf/<int:pk>/", machine_overview_pdf, name="specific_machine_pdf"),
+    path("machine_register/", MachineRegistration.as_view(), name="register_machine"),
+    path("machine/activation/<int:id>/", MachineActivation.as_view(), name="machine_activation"),
 ]
 
 # Add static and media URLs

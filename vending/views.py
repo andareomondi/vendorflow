@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, MachineActivationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -105,10 +105,6 @@ class About(View):
     return render(request, 'vending/about.html')
 
 # pdf generation for machine's overview
-def machine_overview_pdf(request, pk):
-  machine = Machine.objects.get(id=pk)
-  pass
-
 def user_overview_pdf(request):
     owner = request.user
     machines = Machine.objects.filter(owner=owner)
@@ -155,3 +151,58 @@ def machine_overview_pdf(request, pk):
   if not pdf.err:
     return HttpResponse(result.getvalue(), content_type='application/pdf')
   return HttpResponse('Error Rendering PDF', status=400)
+
+class MachineRegistration(View):
+  def get(self, request, *arg, **kwargs):
+    query = request.GET.get('q')
+    try:
+      machine = Machine.objects.get(serial_number=query)
+      print(machine)
+    except Machine.DoesNotExist:
+      machine = None
+    if machine:
+      return redirect(to='machine_activation', id=machine.id)
+    else:
+      messages.error(request, 'Machine not found')
+      return redirect('home')
+
+    # return render(reqeust, 'vending/machine_registration.html')
+
+  def post(self, request):
+    serial_number = request.POST.get('serial_number')
+    machine_type = request.POST.get('machine_type')
+    user = request.user
+    location = 'Undefined'
+    name = 'Undefined'
+    if Machine.objects.filter(serial_number=serial_number).exists():
+      messages.error(request, 'Machine already in the system')
+      return redirect('dashboard')
+    else:
+      machine = Machine(name=name, location=location, serial_number=serial_number, machine_type=machine_type, owner=user)
+      machine.save()
+      messages.success(request, 'Machine registered successfully')
+      return redirect('dashboard')
+
+
+class MachineActivation(View):
+  def get(self, request, id, *args, **kwargs):
+    print('step 1 success')
+    machine = Machine.objects.get(id=id)
+    print('step 2 success')
+    form = MachineActivationForm(instance=machine)
+    print('step 3 success')
+    context = {
+      'form': form,
+    }
+    return render(request, 'vending/machine_activation.html', context=context)
+  def post(self, request, id, *args, **kwargs):
+    machine = Machine.objects.get(id=id)
+    form = MachineActivationForm(request.POST, instance=machine)
+    if form.is_valid():
+      machine = form.save(commit=False)
+      machine.owner = request.user
+      machine.activated = True
+      machine.save()
+      messages.success(request, 'Machine activated successfully')
+      return redirect('home')
+    return render(request, 'vending/machine_activation.html', context={'form': form})

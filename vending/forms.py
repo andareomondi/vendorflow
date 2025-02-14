@@ -20,3 +20,14 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match")
 
         return cleaned_data
+
+
+class MachineForm(forms.ModelForm):
+    class Meta:
+        model = Machine
+        fields = ['serial_number', 'machine_type']
+
+class MachineActivationForm(forms.ModelForm):
+    class Meta:
+        model = Machine
+        fields = ['name', 'machine_type' , 'location']
