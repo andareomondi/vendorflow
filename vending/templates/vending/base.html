@@ -27,7 +27,7 @@
           <a href="{% url 'home' %}" class="logo">VendorFlow</a>
         </div>
       {% endif %} {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
           <strong>Hey {{ request.user.username }}</strong> {{ message }}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -37,7 +37,14 @@
     </main>
     <footer class="footer">
       © 2025 VendorFlow
+
+      {% if request.path == 'dashboard' %}
+
+      {% else %}
       <a href="{% url 'dashboard' %}" style="text-decoration: none">Dashboard</a>
+
+      {% endif %}
+
     </footer>
   </body>
 </html>

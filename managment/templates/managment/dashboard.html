@@ -1,5 +1,5 @@
 {% extends "vending/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block title %}Admin Dashboard{% endblock %}
 
 {% block content %}
@@ -86,6 +86,20 @@
       </div>
     </div>
 
+  </div>
+  <div class="row justify-content-center align-items-center mt-3">
+    <col-sm-10 class="col-md-8 col-lg-6 text-center mt-auto mb-auto">
+      <div class="card" data-bs-theme="dark">
+        <div class="card-body">
+          <form action="{% url 'register_machine' %}" method="post">
+            {% csrf_token %}
+            <h2 class="my-2 display-6 logo">Machine Registration</h2>
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Create Machine</button>
+          </form>
+        </div>
+      </div>
+    </col-sm-10>
   </div>
 </div>
 

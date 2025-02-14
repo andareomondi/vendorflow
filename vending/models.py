@@ -20,8 +20,9 @@ class Machine(models.Model):
     days_used = models.PositiveIntegerField(default=0)
     cost_per_day = models.FloatField(default=3.0)  # Each day costs 3 Ksh
     tokens_per_month = models.PositiveIntegerField(default=30)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vending_machine')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vending_machine', blank=True, null=True)
     last_processed_date = models.DateField(default=datetime.now)
+    activated = models.BooleanField(default=False, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name} - {self.serial_number}'
