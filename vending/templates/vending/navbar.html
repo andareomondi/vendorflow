@@ -1,51 +1,100 @@
-<nav class="navbar mb-2" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="logo" href="{% url 'home' %}">VendorFlow</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"><span class="navbar-toggler-icon"></span></button>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header" style="margin-bottom: -20px;">
-        <h5 class="offcanvas-title logo" id="offcanvasNavbarLabel">Quick Actions</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body">
-        <hr>
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Your Machines</a>
-            <div class="dropdown-menu" aria-labelledby="dropdownId">
-
-                {% if not sidebar_objects %}
-                <a class="dropdown-item">No vending machines were found</a>
-                {% else %}
-                {% for machine in sidebar_objects %}
-                <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
-                {% endfor %}
-                {% endif %}
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendorFlow</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(2, 118, 212, 0.4);
+            z-index: 1000;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar mb-2" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="logo" href="{% url 'home' %}">VendorFlow</a>
+            <button class="navbar-toggler" type="button" id="navbar-toggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <div class="offcanvas-header" style="margin-bottom: -20px;">
+                    <h5 class="offcanvas-title logo">Quick Actions</h5>
+                    <button type="button" class="btn-close text-reset" id="offcanvas-close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <hr>
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown bg-dark">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownId">Your Machines</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownId">
+                                {% if not sidebar_objects %}
+                                <a class="dropdown-item">No vending machines were found</a>
+                                {% else %}
+                                {% for machine in sidebar_objects %}
+                                <a class="dropdown-item" href="{% url 'specific_machine' machine.id %}">{{ forloop.counter}}: {{machine.name}} located in {{machine.location}}</a>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="gadgetsId">Smart Home Gadgets</a>
+                            <div class="dropdown-menu" aria-labelledby="gadgetsId">
+                                <a class="dropdown-item">These feature hasn't been made yet.</a>
+                            </div>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-primary">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="offcanvas-footer p-3 footer">
+                    <p class="text-center">© 2025 VendorFlow</p>
+                </div>
             </div>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="gadgetsId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Smart Home Gadgets</a>
-            <div class="dropdown-menu" aria-labelledby="gadgetsId">
+        </div>
+    </nav>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Toggle offcanvas menu
+            $('#navbar-toggler').click(function() {
+                $('#offcanvasNavbar').toggleClass('show');
+            });
+            $('#offcanvas-close').click(function() {
+                $('#offcanvasNavbar').removeClass('show');
+            });
 
-              <a class="dropdown-item">These feature hasn't been made yet.</a>
-            </div>
-          </li>
-          <li class="nav-item mt-3">
-            <form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-              <button type='submit' class="btn btn-outline-primary">Logout</button>
-            </form>
-          </li>
-        </ul>
-      </div>
-      <div class="offcanvas-footer p-3 footer">
-        <p class="text-center">© 2025 VendorFlow</p>
-    </div>
-    </div>
-  </div>
-</nav>
+            // Toggle dropdowns
+            $('.dropdown-toggle').click(function(e) {
+                e.preventDefault();
+                const $dropdownMenu = $(this).next('.dropdown-menu');
+                $('.dropdown-menu').not($dropdownMenu).removeClass('show');
+                $dropdownMenu.toggleClass('show');
+            });
+
+            // Close dropdowns when clicking outside
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.dropdown-toggle').length) {
+                    $('.dropdown-menu').removeClass('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
