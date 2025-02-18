@@ -1,3 +1,4 @@
+<!-- filepath: /E:/web apps/josiah/vendorflow/vending/templates/vending/navbar.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,9 +44,15 @@
                                 <a class="dropdown-item">No vending machines were found</a>
                                 {% else %}
                                 {% for machine in sidebar_objects %}
-                                <li class="dropdown-item d-flex justify-content-between">
-                                    <span>{{ forloop.counter}}: <a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.name}} located in {{machine.location}}</a></span>
-                                    <span><a href="{% url 'delete_machine' machine.id %}" style="text-decoration: none; color: red;"><i class="bi bi-trash3-fill"></i></a></span>
+                                <li class="dropdown-item">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <span>{{ forloop.counter}}: <a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.name}} located in {{machine.location}}</a></span>
+                                        </div>
+                                        <div class="col-2 text-end">
+                                            <a href="{% url 'delete_machine' machine.id %}" style="text-decoration: none; color: red;"><i class="bi bi-trash3-fill"></i></a>
+                                        </div>
+                                    </div>
                                 </li>
                                 {% endfor %}
                                 {% endif %}
