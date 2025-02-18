@@ -206,3 +206,9 @@ class MachineActivation(View):
       messages.success(request, 'Machine activated successfully')
       return redirect('home')
     return render(request, 'vending/machine_activation.html', context={'form': form})
+
+def deleteMachine(request, pk):
+  machine = Machine.objects.get(id=pk)
+  machine.delete()
+  messages.success(request, 'Machine deleted succesfully')
+  return redirect('home')
