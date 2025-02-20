@@ -76,7 +76,7 @@
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <div class="table-responsive">
-                <table class="transactions-table">
+                <table class="transactions-table text-center">
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -84,6 +84,7 @@
                       <th>Payment status</th>
                       <th>Approval status</th>
                       <th>Date</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -107,7 +108,14 @@
                         <span class="badge bg-danger">Pending</span>
                         {% endif %}
                       </td>
-                      <td>{{refill.date}}</td>
+                        <td>{{ refill.date|date:"Y-m-d" }}</td>
+                      <td>
+                        {% if refill.status == 'Approved' %}
+                        <a style="text-decoration: none; color: grey; font-size: 1.5em; pointer-events: none;"><i class="bi bi-trash3-fill"></i></a>
+                        {% else %}
+                        <a href="{% url 'delete_refill' refill.id %}" style="text-decoration: none; color: red; font-size: 1.5em;"><i class="bi bi-trash3-fill"></i></a>
+                        {% endif %}
+                      </td>
                     </tr>
                     {% endfor %}
 

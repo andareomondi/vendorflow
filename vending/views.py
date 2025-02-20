@@ -229,3 +229,9 @@ class MachineUpdate(View):
       messages.success(request, 'Machine updated successfully')
       return redirect('home')
     return render(request, 'vending/machine_update.html', context={'form': form})
+
+def deleteRefill(request, pk):
+  refill = Refill.objects.get(id=pk)
+  refill.delete()
+  messages.success(request, 'Refill request deleted succesfully')
+  return redirect('home')

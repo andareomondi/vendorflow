@@ -37,6 +37,7 @@ urlpatterns = [
     path("machine/activation/<int:id>/", MachineActivation.as_view(), name="machine_activation"),
     path("machine/delete/<int:pk>", deleteMachine, name='delete_machine'),
     path("machine/update/<int:pk>", MachineUpdate.as_view(), name='machine_update'),
+    path("refill/delete/<int:pk>", deleteRefill, name='delete_refill'),
 ]
 
 # Add static and media URLs
