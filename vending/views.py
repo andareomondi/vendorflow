@@ -64,7 +64,6 @@ class Specific_Machine(LoginRequiredMixin, View):
       payment_made = True
     else:
       payment_made = False
-    # print(package, total_price, token_amount)
 
     refill = Refill(machine=machine, token_pack=package, status='Pending', payment_made=payment_made)
     refill.save()
@@ -157,7 +156,6 @@ class MachineRegistration(View):
     query = request.GET.get('q')
     try:
       machine = Machine.objects.get(serial_number=query)
-      print(machine)
     except Machine.DoesNotExist:
       machine = None
     if machine:
@@ -186,11 +184,8 @@ class MachineRegistration(View):
 
 class MachineActivation(View):
   def get(self, request, id, *args, **kwargs):
-    print('step 1 success')
     machine = Machine.objects.get(id=id)
-    print('step 2 success')
     form = MachineActivationForm(instance=machine)
-    print('step 3 success')
     context = {
       'form': form,
     }
