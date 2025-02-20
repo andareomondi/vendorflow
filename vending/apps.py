@@ -30,7 +30,8 @@ class VendingConfig(AppConfig):
     def process_daily_tokenization(self):
         from .models import Machine
         from datetime import datetime
-        machines = Machine.objects.all()
+        # filter only activated machines
+        machines = Machine.objects.filter(activated=True)
         current_date = datetime.now().date()
         for machine in machines:
             machine.process_daily_usage()
