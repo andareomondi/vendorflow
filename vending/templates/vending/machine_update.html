@@ -1,0 +1,31 @@
+{% extends 'vending/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+
+User Registration
+{% endblock title %}
+
+
+{% block content %}
+<div class="container text-white">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-10 col md-8 col-lg-6 text-center mt-auto mb-auto">
+      <div class="card" data-bs-theme="dark">
+        <div class="card-body">
+
+          <form method="post">
+            <h2 class="my-2 display-6 logo">Machine Update</h2>
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

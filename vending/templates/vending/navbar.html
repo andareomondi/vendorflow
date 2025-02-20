@@ -50,6 +50,7 @@
                                             <span>{{ forloop.counter}}: <a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.name}} in {{machine.location}}</a></span>
                                         </div>
                                         <div class="col-2 text-end">
+                                            <a href="{% url 'machine_update' machine.id %}" style="text-decoration: none; color: green; margin-right: 10px; margin-left: -14px;"><i class="bi bi-pencil-square"></i></a>
                                             <a href="{% url 'delete_machine' machine.id %}" style="text-decoration: none; color: red;"><i class="bi bi-trash3-fill"></i></a>
                                         </div>
                                     </div>

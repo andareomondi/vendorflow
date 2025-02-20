@@ -212,3 +212,20 @@ def deleteMachine(request, pk):
   machine.delete()
   messages.success(request, 'Machine deleted succesfully')
   return redirect('home')
+
+class MachineUpdate(View):
+  def get(self, request, pk):
+    machine = Machine.objects.get(id=pk)
+    form = MachineActivationForm(instance=machine)
+    context = {
+      'form': form,
+    }
+    return render(request, 'vending/machine_update.html', context=context)
+  def post(self, request, pk):
+    machine = Machine.objects.get(id=pk)
+    form = MachineActivationForm(request.POST, instance=machine)
+    if form.is_valid():
+      form.save()
+      messages.success(request, 'Machine updated successfully')
+      return redirect('home')
+    return render(request, 'vending/machine_update.html', context={'form': form})

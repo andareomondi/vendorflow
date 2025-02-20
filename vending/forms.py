@@ -31,3 +31,8 @@ class MachineActivationForm(forms.ModelForm):
     class Meta:
         model = Machine
         fields = ['name', 'machine_type' , 'location']
+
+class MachineUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Machine
+        fields = ['name', 'machine_type' , 'location']
