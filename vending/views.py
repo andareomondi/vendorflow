@@ -209,9 +209,26 @@ class MachineActivation(View):
 
 def deleteMachine(request, pk):
   machine = Machine.objects.get(id=pk)
-  machine.delete()
-  messages.success(request, 'Machine deleted succesfully')
-  return redirect('home')
+  transactions = Transaction.objects.filter(machine=machine).order_by('-date')
+  refills = Refill.objects.filter(machine=machine).order_by('-date')
+  template = get_template('vending/machine_overview_pdf.html')
+  context = {
+    'machine': machine,
+    'transactions': transactions,
+    'refills': refills,
+    'generation_date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+  html = template.render(context)
+
+  # Create a PDF
+  result = BytesIO()
+  pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+
+  if not pdf.err:
+    messages.success(request, 'Machine deleted succesfully')
+    machine.delete()
+    return HttpResponse(result.getvalue(), content_type='application/pdf')
+  return HttpResponse('Error Rendering PDF', status=400)
 
 class MachineUpdate(View):
   def get(self, request, pk):
