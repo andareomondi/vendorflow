@@ -68,5 +68,5 @@ def start_mqtt_client():
         client.connect(broker_address, broker_port, 60)
         client.loop_start()
     except Exception as e:
-        print(f"Error connecting to MQTT broker: {e}")
+        # print(f"Error connecting to MQTT broker: {e}")
         client.loop_stop()

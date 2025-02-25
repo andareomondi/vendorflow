@@ -21,6 +21,7 @@
                   <th>Location</th>
                   <th>Remaining Tokens</th>
                   <th>status</th>
+                  <th>Activated</th>
                 </tr>
               </thead>
               <tbody>
@@ -39,8 +40,14 @@
                     <span class="badge bg-danger">Off</span>
                     {% endif %}
                   </td>
-
+                  <td>
+                    {% if machine.activated %}
+                    <span class="badge bg-success">Yes</span>
+                    {% else %}
+                    <span class="badge bg-danger">No</span>
+                    {% endif %}
                 </tr>
+
                 {% endfor %}
               </tbody>
             </table>

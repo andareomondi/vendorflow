@@ -17,7 +17,7 @@ from django.core.mail import send_mail
 class Home(LoginRequiredMixin, View):
   def get(self, request):
     user = request.user
-    machines = Machine.objects.filter(owner=user)
+    machines = Machine.objects.filter(owner=user, activated=True)
     transactions = Transaction.objects.filter(machine__owner=user).select_related('machine__owner').all()
     total_sales = sum(machine.total_amount for machine in machines)
     total_transactions = sum(transaction.amount for transaction in transactions)
