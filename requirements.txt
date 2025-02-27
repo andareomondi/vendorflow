@@ -7,3 +7,4 @@ whitenoise
 paho-mqtt
 xhtml2pdf
 djangorestframework
+django-cors-headers
