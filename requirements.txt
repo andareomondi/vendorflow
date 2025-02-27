@@ -6,3 +6,4 @@ python-dotenv
 whitenoise
 paho-mqtt
 xhtml2pdf
+djangorestframework

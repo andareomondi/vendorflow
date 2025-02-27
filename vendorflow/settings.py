@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'vending',
     'managment',
     'home',
+    'api',
+    'rest_framework',
+    # 'rest_framework.authtoken',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

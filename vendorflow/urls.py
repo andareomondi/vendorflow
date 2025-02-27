@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from vending.views import *
 from managment.views import *
 from home.views import *
+from api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,6 +39,8 @@ urlpatterns = [
     path("machine/delete/<int:pk>", deleteMachine, name='delete_machine'),
     path("machine/update/<int:pk>", MachineUpdate.as_view(), name='machine_update'),
     path("refill/delete/<int:pk>", deleteRefill, name='delete_refill'),
+    path("api/", include('api.urls')),
+    # path("api-auth/", include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 # Add static and media URLs
