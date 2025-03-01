@@ -2,6 +2,16 @@ from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
+class Shop(models.Model):
+    name = models.CharField(max_length=255)
+    total_sales = models.PositiveIntegerField(default=0)
+    amount = models.PositiveIntegerField(default=0)
+    customers_served = models.PositiveIntegerField(default=0)
+    location = models.CharField(max_length=255, default='Kitengela')
+
+    def __str__(self):
+        return self.name
+
 class Machine(models.Model):
     CHOICES = [
         ('Milk', 'Milk'),
@@ -21,6 +31,7 @@ class Machine(models.Model):
     cost_per_day = models.FloatField(default=3.0)  # Each day costs 3 Ksh
     tokens_per_month = models.PositiveIntegerField(default=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vending_machine', blank=True, null=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='related_shop', blank=True, null=True)
     last_processed_date = models.DateField(default=datetime.now)
     activated = models.BooleanField(default=False, blank=True, null=True)
 

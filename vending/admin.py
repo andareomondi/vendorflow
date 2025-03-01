@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(Transaction)
 admin.site.register(Machine)
 admin.site.register(Refill)
+admin.site.register(Shop)
