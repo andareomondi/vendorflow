@@ -36,3 +36,8 @@ class MachineUpdateForm(forms.ModelForm):
     class Meta:
         model = Machine
         fields = ['name', 'machine_type' , 'location']
+
+class ShopsForm(forms.ModelForm):
+    class Meta:
+        model = Shop
+        fields = ['name', 'location']

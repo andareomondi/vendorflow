@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserRegistrationForm, MachineActivationForm
+from .forms import UserRegistrationForm, MachineActivationForm, ShopsForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,32 +17,29 @@ from django.core.mail import send_mail
 class Home(LoginRequiredMixin, View):
   def get(self, request):
     user = request.user
-    machines = Machine.objects.filter(owner=user, activated=True)
-    transactions = Transaction.objects.filter(machine__owner=user).select_related('machine__owner').all()
-    total_sales = sum(machine.total_amount for machine in machines)
-    total_transactions = sum(transaction.amount for transaction in transactions)
+    shops = Shop.objects.filter(owner=user)
+    total_sales = sum(shop.amount for shop in shops)
+    customers = sum(shop.customers_served for shop in shops)
+    amount = sum(shop.amount for shop in shops)
+    form = ShopsForm()
     context = {
-        'machines': machines,
-        'transactions': transactions,
-        'total_sales': total_sales,
-        'total_transactions': total_transactions,
+      'shops': shops,
+      'customers': customers,
+      'total_sales': total_sales,
+      'amount': amount,
+      'form': form,
     }
     return render(request, 'vending/home.html', context = context)
 
   def post(self, request):
-    name = request.POST.get('name')
-    location = request.POST.get('location')
-    serial_number = request.POST.get('serial_number')
-    machine_typer = request.POST.get('machine_typer')
-    user = request.user
-    if Machine.objects.filter(serial_number=serial_number).exists():
-      messages.error(request, 'Machine already in the system')
+    form = ShopsForm(request.POST)
+    if form.is_valid():
+      shop = form.save(commit=False)
+      shop.owner = request.user
+      shop.save()
+      messages.success(request, 'Shop created successfully')
       return redirect('home')
-    else:
-      machine = Machine(name=name, location=location, serial_number=serial_number, machine_type=machine_typer, owner=user)
-      machine.save()
-      messages.success(request, 'New machine registered')
-      return redirect('home')
+    return render(request, 'vending/home.html', {'form': form})
 
 
 class Specific_Machine(LoginRequiredMixin, View):

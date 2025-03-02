@@ -1,5 +1,5 @@
 {% extends "vending/base.html" %}
-
+{% load crispy_forms_tags %}
 {% block title %}Dashboard - Vending Machine Dashboard{% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@
   <div class="modal-dialog">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">New machine registration</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New shop registration</h1>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -18,19 +18,13 @@
           machine registered? To begin enter the serial number of the machine.
           <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <form class="row g-3 was-validated" validate method="get" action="{% url 'register_machine' %}">
-          <div class="col-sm-10 col-md-10 col-lg-10">
-            <label for="validationCustom01" class="form-label">Serial Number</label>
-            <input type="text" class="form-control bg-dark text-white" id="validationCustom01" required name="q" placeholder="Enter serial number" value="{{ request.get.q }}">
-            <div class="valid-feedback">
-              Ensure the serial number is correct and case sensitive.
-            </div>
-          </div>
-
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">Add machine</button>
       </div>
       </form>
     </div>
@@ -45,18 +39,18 @@
         <div class="stat-card">
           <div class="row justify-content-center">
             <div class="col-6 mb-2 text-center">
-              <div class="stat-title">Total Vending Machines </div>
-              <div class="stat-value">{{machines | length}}</div></div>
+              <div class="stat-title">Total Shops</div>
+              <div class="stat-value">{{shops | length}}</div></div>
             <div class="col-6 mb-2 text-center">
-              <div class="stat-title">Total Transactions</div>
-              <div class="stat-value">Ksh {{total_transactions}}</div>
+              <div class="stat-title">Customers Served</div>
+              <div class="stat-value">{{customers}}</div>
             </div>
             <div class="col-6 mb-2 text-center">
               <div class="stat-title">Total Sales</div>
-              <div class="stat-value">Ksh {{total_sales}}</div></div>
+              <div class="stat-value">{{total_sales}}</div></div>
             <div class="col-6 mb-2 text-center">
-              <div class="stat-title py-2">Generate Report</div>
-              <a class="view-btn" href="{% url 'user_overview_pdf' %}" style="text-decoration: none;">Report</a>
+              <div class="stat-title">Total Amount</div>
+              <div class="stat-value">Ksh: {{amount}}</div>
             </div>
           </div>
           <div class="row justify-content-center">
