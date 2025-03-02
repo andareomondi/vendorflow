@@ -11,6 +11,7 @@ from io import BytesIO
 from django.template.loader import render_to_string, get_template
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from django.db.models import Count
 
 
 # Create your views here.
@@ -244,3 +245,12 @@ def deleteRefill(request, pk):
   refill.delete()
   messages.success(request, 'Refill request deleted succesfully')
   return redirect('home')
+
+class Shops(View):
+  def get(self, request):
+    user = request.user
+    shops = Shop.objects.filter(owner=user).annotate(machine_count=Count('related_shop'))
+    context = {
+      'shops': shops,
+    }
+    return render(request, 'vending/shops.html', context=context)

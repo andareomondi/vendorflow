@@ -30,13 +30,13 @@
     </div>
   </div>
 </div>
-<div class="container text-white">
+<div class="container text-white" >
   <h1 class="welcome mt-4">Welcome back {{request.user.username}} 👋</h1>
 
   <div class="row justify-content-center">
       <div class="col-md-6 col-lg-6 col-sm-10 mb-4">
         <p class="section-title">Vending Machines Overview</p>
-        <div class="stat-card">
+        <div class="stat-card" data-url="{% url 'shops' %}">
           <div class="row justify-content-center">
             <div class="col-6 mb-2 text-center">
               <div class="stat-title">Total Shops</div>
@@ -54,10 +54,8 @@
             </div>
           </div>
           <div class="row justify-content-center">
-            <button class="view-btn"   data-bs-toggle="modal"
-            data-bs-target="#exampleModal" type="button"><i class="bi bi-plus-lg"></i> New machine</button>
+            <button class="view-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"><i class="bi bi-plus-lg"></i> New machine</button>
           </div>
-
         </div>
       </div>
       <div class="col-md-6 col-lg-6 col-sm-10 mb-4">
@@ -66,5 +64,19 @@
   </div>
 </div>
 
+<!-- Add this script at the end of your body tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.stat-card').forEach(function(card) {
+            card.addEventListener('click', function(event) {
+                // Check if the clicked element is the button or inside the button
+                if (event.target.closest('.view-btn')) {
+                    return; // Do nothing if the button is clicked
+                }
+                window.location.href = card.getAttribute('data-url');
+            });
+        });
+    });
+</script>
 
 {% endblock %}

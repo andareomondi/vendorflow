@@ -1,0 +1,38 @@
+{% extends 'vending/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Shops - Vending Machine Dashboard{% endblock %}
+
+{% block content %}
+<div class="container text-white">
+  <div class="row justify-content-center mt-2">
+
+    {% for shop in shops %}
+    <div class="col-sm-10 div md-6 col-lg-4">
+      <div class="stat-card my-2">
+        <div class="row justify-content-center">
+          <div class="col-6 mb-2 text-center">
+            <div class="stat-title">Registered Machines</div>
+            <div class="stat-value">{{shop.machine_count}}</div></div>
+          <div class="col-6 mb-2 text-center">
+            <div class="stat-title">Customers Served</div>
+            <div class="stat-value">{{shop.customers_served}}</div>
+          </div>
+          <div class="col-6 mb-2 text-center">
+            <div class="stat-title">Total Sales</div>
+            <div class="stat-value">{{shop.total_sales}}</div></div>
+          <div class="col-6 mb-2 text-center">
+            <div class="stat-title">Total Amount</div>
+            <div class="stat-value">Ksh: {{shop.amount}}</div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <a href="#" class="btn btn-primary" style="text-decoration: none;">View shop</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

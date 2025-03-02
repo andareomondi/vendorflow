@@ -40,6 +40,7 @@ urlpatterns = [
     path("machine/update/<int:pk>", MachineUpdate.as_view(), name='machine_update'),
     path("refill/delete/<int:pk>", deleteRefill, name='delete_refill'),
     path("api/", include('api.urls')),
+    path("shops/", Shops.as_view(), name="shops"),
     # path("api-auth/", include('rest_framework.urls', namespace='rest_framework')),
 ]
 
