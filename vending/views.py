@@ -254,3 +254,15 @@ class Shops(View):
       'shops': shops,
     }
     return render(request, 'vending/shops.html', context=context)
+
+class SpecificShop(View):
+  def get(self, request, pk):
+    shop = Shop.objects.get(id=pk)
+    machines = Machine.objects.filter(shop=shop)
+    total_sales = sum(machine.total_amount for machine in machines)
+    context = {
+      'shop': shop,
+      'machines': machines,
+      'total_sales': total_sales,
+    }
+    return render(request, 'vending/shop_detail.html', context=context)

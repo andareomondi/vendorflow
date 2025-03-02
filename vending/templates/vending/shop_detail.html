@@ -1,0 +1,108 @@
+{% extends 'vending/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Shop Detail - Vending Machine Dashboard{% endblock %}
+
+{% block content %}
+<div class="container text-white">
+    <div class="row mb-4 mt-2">
+      <div class="col">
+        <h2 class="h3 mb-0">{{ machine.machine_type }} Machine Details {{pk}}</h2>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col">
+        <div class="stat-card">
+          <div class="card-body">
+            <p class="card-text"><strong>Name: </strong> {{ machine.name}}</p>
+            <p class="card-text"><strong>Serial number: </strong> {{ machine.serial_number }}</p>
+            <p class="card-text"><strong>Location: </strong> {{ machine.location }}</p>
+            <p class="card-text"><strong>Remaining Tokens: </strong> {{ machine.remaining_tokens }}</p>
+            <p class="card-text"><strong>Total Sales: </strong> Ksh {{ machine.total_amount }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col">
+        <h3 class="h4 mb-3">Transaction History</h3>
+        <div class="stat-card">
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <div class="table-responsive">
+                <table class="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Volume</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+                      <td scope="row">{{transaction.id}}</td>
+                      <td>{{transaction.amount}}</td>
+                      <td>{{transaction.volume}}</td>
+                      <td>{{transaction.date}}</td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row mb-4">
+      <div class="col">
+        <h3 class="h4 mb-3">Transaction History</h3>
+        <div class="stat-card">
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <div class="table-responsive">
+                <table class="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Amount</th>
+                      <th>Volume</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+                      <td scope="row">{{transaction.id}}</td>
+                      <td>{{transaction.amount}}</td>
+                      <td>{{transaction.volume}}</td>
+                      <td>{{transaction.date}}</td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <a href="#" class="btn btn-primary">Download Machine History
+          (PDF)</a>
+      </div>
+    </div>
+</div>
+{% endblock %}

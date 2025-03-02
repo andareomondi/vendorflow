@@ -41,6 +41,8 @@ urlpatterns = [
     path("refill/delete/<int:pk>", deleteRefill, name='delete_refill'),
     path("api/", include('api.urls')),
     path("shops/", Shops.as_view(), name="shops"),
+    path("shops/<int:pk>/", SpecificShop.as_view(), name="specific_shop"),
+
     # path("api-auth/", include('rest_framework.urls', namespace='rest_framework')),
 ]
 
