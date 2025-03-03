@@ -180,7 +180,7 @@ class MachineRegistration(View):
       return redirect('dashboard')
 
 
-class MachineActivation(View):
+class MachineActivation(LoginRequiredMixin, View):
   def get(self, request, id, *args, **kwargs):
     machine = Machine.objects.get(id=id)
     form = MachineActivationForm(instance=machine)
@@ -223,7 +223,7 @@ def deleteMachine(request, pk):
     return HttpResponse(result.getvalue(), content_type='application/pdf')
   return HttpResponse('Error Rendering PDF', status=400)
 
-class MachineUpdate(View):
+class MachineUpdate(LoginRequiredMixin, View):
   def get(self, request, pk):
     machine = Machine.objects.get(id=pk)
     form = MachineActivationForm(instance=machine)
@@ -250,19 +250,25 @@ class Shops(View):
   def get(self, request):
     user = request.user
     shops = Shop.objects.filter(owner=user).annotate(machine_count=Count('related_shop'))
+    # if no shops redirect to home and display message
+    if not shops:
+      messages.error(request, 'No shops found')
+      return redirect('home')
     context = {
       'shops': shops,
     }
     return render(request, 'vending/shops.html', context=context)
 
-class SpecificShop(View):
-  def get(self, request, pk):
-    shop = Shop.objects.get(id=pk)
-    machines = Machine.objects.filter(shop=shop)
-    total_sales = sum(machine.total_amount for machine in machines)
-    context = {
-      'shop': shop,
-      'machines': machines,
-      'total_sales': total_sales,
-    }
-    return render(request, 'vending/shop_detail.html', context=context)
+class SpecificShop(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        shop = Shop.objects.get(id=pk)
+        machines = Machine.objects.filter(shop=shop)
+        transactions = Transaction.objects.filter(machine__in=machines).order_by('-date')
+        total_sales = sum(machine.total_amount for machine in machines)
+        context = {
+            'shop': shop,
+            'machines': machines,
+            'transactions': transactions,
+            'total_sales': total_sales,
+        }
+        return render(request, 'vending/shop_detail.html', context=context)

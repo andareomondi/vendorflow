@@ -7,7 +7,7 @@
 <div class="container text-white">
     <div class="row mb-4 mt-2">
       <div class="col">
-        <h2 class="h3 mb-0">{{ machine.machine_type }} Machine Details {{pk}}</h2>
+        <h2 class="h3 mb-0">{{shop.name}} shop located in {{shop.location}}</h2>
       </div>
     </div>
 
@@ -15,11 +15,11 @@
       <div class="col">
         <div class="stat-card">
           <div class="card-body">
-            <p class="card-text"><strong>Name: </strong> {{ machine.name}}</p>
-            <p class="card-text"><strong>Serial number: </strong> {{ machine.serial_number }}</p>
-            <p class="card-text"><strong>Location: </strong> {{ machine.location }}</p>
-            <p class="card-text"><strong>Remaining Tokens: </strong> {{ machine.remaining_tokens }}</p>
-            <p class="card-text"><strong>Total Sales: </strong> Ksh {{ machine.total_amount }}</p>
+            <p class="card-text"><strong>Name: </strong> {{ shop.name}}</p>
+            <p class="card-text"><strong>Location: </strong> {{ shop.location }}</p>
+            <p class="card-text"><strong>Customers Served: </strong> {{ shop.customers_served }}</p>
+            <p class="card-text"><strong>Amount gained: </strong>Ksh {{ shop.amount }}</p>
+            <p class="card-text"><strong>Total Sales: </strong>{{ shop.total_sales }}</p>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
 
     <div class="row mb-4">
       <div class="col">
-        <h3 class="h4 mb-3">Transaction History</h3>
+        <h3 class="h4 mb-3">Machines in the shop</h3>
         <div class="stat-card">
           <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -35,21 +35,25 @@
                 <table class="transactions-table">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Amount</th>
-                      <th>Volume</th>
-                      <th>Date</th>
+                      <th>#</th>
+                      <th>Serial number</th>
+                      <th>Type</th>
+                      <th>Remaining Tokens</th>
+                      <th>Amount gained</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
 
-                    {% for transaction in transactions %}
+                    {% for machine in machines %}
 
                     <tr>
-                      <td scope="row">{{transaction.id}}</td>
-                      <td>{{transaction.amount}}</td>
-                      <td>{{transaction.volume}}</td>
-                      <td>{{transaction.date}}</td>
+                      <td scope="row">{{forloop.counter}}</td>
+                      <td scope="row">{{machine.serial_number}}</td>
+                      <td>{{machine.machine_type}}</td>
+                      <td>{{machine.remaining_tokens}}</td>
+                      <td>{{machine.total_amount}}</td>
+                      <td><a href="" class="btn btn-danger">Delete</a></td>
                     </tr>
                     {% endfor %}
 
@@ -96,12 +100,6 @@
             </ul>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col text-center">
-        <a href="#" class="btn btn-primary">Download Machine History
-          (PDF)</a>
       </div>
     </div>
 </div>
