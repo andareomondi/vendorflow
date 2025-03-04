@@ -168,8 +168,9 @@ class MachineRegistration(View):
     serial_number = request.POST.get('serial_number')
     machine_type = request.POST.get('machine_type')
     user = request.user
-    location = 'Undefined'
-    name = 'Undefined'
+    location = None
+    name = None
+    shop = None
     if Machine.objects.filter(serial_number=serial_number).exists():
       messages.error(request, 'Machine already in the system')
       return redirect('dashboard')

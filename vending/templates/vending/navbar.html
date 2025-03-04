@@ -47,7 +47,7 @@
                                 <li class="dropdown-item">
                                     <div class="row">
                                         <div class="col-10">
-                                            <span>{{ forloop.counter}}: <a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.name}} in {{machine.location}}</a></span>
+                                            <span>{{ forloop.counter}}: <a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.name}}</a></span>
                                         </div>
                                         <div class="col-2 text-end">
                                             <a href="{% url 'machine_update' machine.id %}" style="text-decoration: none; color: green; margin-right: 10px; margin-left: -14px;"><i class="bi bi-pencil-square"></i></a>
@@ -65,7 +65,15 @@
                                 <a class="dropdown-item">These feature hasn't been made yet.</a>
                             </div>
                         </li>
-                        <li class="nav-item mt-3">
+                        <hr>
+                        <li>
+                            <form class="d-flex mt-1" method="get" action="{% url 'register_machine' %}">
+                                <input class="form-control me-2" type="search" placeholder="Search for machine" aria-label="Search" name='q'>
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                              </form>
+                        </li>
+                        <hr>
+                        <li class="nav-item mt-1">
                             <form action="{% url 'logout' %}" method="post">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-primary">Logout</button>

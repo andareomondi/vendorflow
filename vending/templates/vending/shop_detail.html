@@ -37,6 +37,7 @@
                     <tr>
                       <th>#</th>
                       <th>Serial number</th>
+                      <th>Name</th>
                       <th>Type</th>
                       <th>Remaining Tokens</th>
                       <th>Amount gained</th>
@@ -49,14 +50,14 @@
 
                     <tr>
                       <td scope="row">{{forloop.counter}}</td>
-                      <td scope="row">{{machine.serial_number}}</td>
+                      <td scope="row"><a href="{% url 'specific_machine' machine.id %}" style="text-decoration: none;">{{machine.serial_number}}</a></td>
+                      <td>{{machine.name}}</td>
                       <td>{{machine.machine_type}}</td>
                       <td>{{machine.remaining_tokens}}</td>
                       <td>{{machine.total_amount}}</td>
-                      <td><a href="" class="btn btn-danger">Delete</a></td>
+                      <td><a href="{% url 'delete_machine' machine.id %}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     {% endfor %}
-
                   </tbody>
                 </table>
               </div>
