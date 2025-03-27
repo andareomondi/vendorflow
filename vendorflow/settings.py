@@ -24,7 +24,7 @@ load_dotenv()
 SECRET_KEY= os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -92,15 +92,15 @@ WSGI_APPLICATION = 'vendorflow.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
         # extarnal database
-        'ENGINE': os.environ.get('ENGINE'),
-        'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('USER'),
-        'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOST'),
-        'PORT': os.environ.get('PORT'),
+        # 'ENGINE': os.environ.get('ENGINE'),
+        # 'NAME': os.environ.get('NAME'),
+        # 'USER': os.environ.get('USER'),
+        # 'PASSWORD': os.environ.get('PASSWORD'),
+        # 'HOST': os.environ.get('HOST'),
+        # 'PORT': os.environ.get('PORT'),
     }
 }
 
@@ -159,7 +159,7 @@ LOGOUT_REDIRECT_URL = 'login'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'shadrackandare@gmail.com'
-EMAIL_HOST_PASSWORD = 'juqajuinnhanwznn'
+EMAIL_HOST_PASSWORD = 'woxyjcvpfmcsfyg'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'shadrackandare@gmail.com'

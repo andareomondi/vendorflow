@@ -18,6 +18,13 @@ from django.db.models import Count
 class Home(LoginRequiredMixin, View):
   def get(self, request):
     user = request.user
+    send_mail(
+        "this is a test",
+        "here is the message",
+        "shadrackandare@gmail.com",
+        ["andareomondi@gmail.com"],
+        fail_silently=False,
+        )
     shops = Shop.objects.filter(owner=user)
     total_sales = sum(shop.amount for shop in shops)
     customers = sum(shop.customers_served for shop in shops)
